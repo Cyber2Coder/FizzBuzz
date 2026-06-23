@@ -10,6 +10,10 @@ const btnFizz = document.getElementById("btn-fizz");
 const btnBuzz = document.getElementById("btn-buzz");
 const btnFizzBuzz = document.getElementById("btn-fizzbuzz");
 
+const startScreen = document.getElementById("start-screen");
+const startBtn = document.getElementById("start-btn");
+const resetBtn = document.getElementById("reset-btn");
+
 // -----------------------------
 // GAME STATE
 // -----------------------------
@@ -20,6 +24,22 @@ let streak = 0;
 // -----------------------------
 // UTILITY FUNCTIONS
 // -----------------------------
+
+function startGame() {
+  currentNumber = 1;
+  score = 0;
+  streak = 0;
+  updateDisplay();
+  startScreen.style.display = "none";
+}
+
+function resetGame() {
+  currentNumber = 1;
+  score = 0;
+  streak = 0;
+  updateDisplay();
+  showFeedback("Game reset!", "#1976d2");
+}
 
 function getFizzBuzzValue(n) {
   if (n % 15 === 0) return "fizzbuzz";
@@ -83,6 +103,9 @@ function squishButton(btn) {
 // -----------------------------
 // EVENT LISTENERS
 // -----------------------------
+startBtn.addEventListener("click", startGame);
+resetBtn.addEventListener("click", resetGame);
+
 btnFizz.addEventListener("click", () => {
   squishButton(btnFizz);
   handleChoice("fizz");
