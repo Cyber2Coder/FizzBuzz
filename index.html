@@ -1,13 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>FizzBuzz Demo</title>
-  </head>
-  <body>
-    <h1>FizzBuzz Demo</h1>
-    <p>Open your browser console to see the output.</p>
+<head>
+  <meta charset="UTF-8" />
+  <title>FizzBuzz 2.0 – King of the Kid</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="fbz-app">
+    <header class="fbz-header">
+      <h1>FizzBuzz 2.0</h1>
+      <div class="fbz-scoreboard">
+        <div class="score-box">
+          <span class="score-label">Score</span>
+          <span class="score-value" id="score">0</span>
+        </div>
+        <div class="score-box">
+          <span class="score-label">Streak</span>
+          <span class="score-value" id="streak">0</span>
+        </div>
+      </div>
+    </header>
 
-    <script src="script.js"></script>
-  </body>
+    <main class="fbz-main">
+      <div class="fbz-number-card">
+        <span class="fbz-number" id="current-number">1</span>
+      </div>
+
+      <div class="fbz-feedback" id="feedback">
+        <!-- “Great job!”, “Try again!” etc. -->
+      </div>
+
+      <div class="fbz-buttons">
+        <button class="fbz-btn fizz" id="btn-fizz">Fizz</button>
+        <button class="fbz-btn buzz" id="btn-buzz">Buzz</button>
+        <button class="fbz-btn fizzbuzz" id="btn-fizzbuzz">FizzBuzz</button>
+      </div>
+    </main>
+
+    <div class="fbz-floating-shapes">
+      <div class="shape shape-star"></div>
+      <div class="shape shape-cloud"></div>
+      <div class="shape shape-circle"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
 </html>
