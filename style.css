@@ -9,13 +9,12 @@ body {
 
 /* MAIN CONTAINER */
 .fbz-container {
-  background: white;
+  width: 520px;        /* or 600px if you want a big arcade feel */
+  max-width: 90vw;     /* responsive */
   padding: 30px;
-  width: 520px;        /* was 360px */
   border-radius: 25px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  position: relative;
 }
+
 
 
 /* HEADER */
