@@ -1,30 +1,74 @@
-// -----------------------------
-// ELEMENT REFERENCES
-// -----------------------------
-const numberEl = document.getElementById("current-number");
-const feedbackEl = document.getElementById("feedback");
-const scoreEl = document.getElementById("score");
-const streakEl = document.getElementById("streak");
+// DOM ELEMENTS
+const numberDisplay = document.getElementById("number-display");
+const feedback = document.getElementById("feedback");
+const scoreDisplay = document.getElementById("score");
+const streakDisplay = document.getElementById("streak");
 
-const btnFizz = document.getElementById("btn-fizz");
-const btnBuzz = document.getElementById("btn-buzz");
-const btnFizzBuzz = document.getElementById("btn-fizzbuzz");
+const fizzBtn = document.getElementById("fizz-btn");
+const buzzBtn = document.getElementById("buzz-btn");
+const fizzbuzzBtn = document.getElementById("fizzbuzz-btn");
 
 const startScreen = document.getElementById("start-screen");
 const startBtn = document.getElementById("start-btn");
 const resetBtn = document.getElementById("reset-btn");
 
-// -----------------------------
+// AUDIO
+const sfxCorrect = document.getElementById("sfx-correct");
+const sfxWrong = document.getElementById("sfx-wrong");
+const sfxClick = document.getElementById("sfx-click");
+
 // GAME STATE
-// -----------------------------
 let currentNumber = 1;
 let score = 0;
 let streak = 0;
 
-// -----------------------------
-// UTILITY FUNCTIONS
-// -----------------------------
+// UPDATE UI
+function updateDisplay() {
+  numberDisplay.textContent = currentNumber;
+  scoreDisplay.textContent = score;
+  streakDisplay.textContent = streak;
+  feedback.textContent = "";
+}
 
+// FEEDBACK
+function showFeedback(msg, color) {
+  feedback.textContent = msg;
+  feedback.style.color = color;
+}
+
+// SOUND
+function playCorrect() { sfxCorrect.currentTime = 0; sfxCorrect.play(); }
+function playWrong() { sfxWrong.currentTime = 0; sfxWrong.play(); }
+function playClick() { sfxClick.currentTime = 0; sfxClick.play(); }
+
+// GAME LOGIC
+function checkAnswer(answer) {
+  playClick();
+
+  const isFizz = currentNumber % 3 === 0;
+  const isBuzz = currentNumber % 5 === 0;
+  const correctAnswer =
+    isFizz && isBuzz ? "fizzbuzz" :
+    isFizz ? "fizz" :
+    isBuzz ? "buzz" :
+    "none";
+
+  if (answer === correctAnswer) {
+    score++;
+    streak++;
+    playCorrect();
+    showFeedback("Correct!", "green");
+    currentNumber++;
+  } else {
+    streak = 0;
+    playWrong();
+    showFeedback("Try again!", "red");
+  }
+
+  updateDisplay();
+}
+
+// START GAME
 function startGame() {
   currentNumber = 1;
   score = 0;
@@ -33,6 +77,7 @@ function startGame() {
   startScreen.style.display = "none";
 }
 
+// RESET GAME
 function resetGame() {
   currentNumber = 1;
   score = 0;
@@ -41,87 +86,10 @@ function resetGame() {
   showFeedback("Game reset!", "#1976d2");
 }
 
-function getFizzBuzzValue(n) {
-  if (n % 15 === 0) return "fizzbuzz";
-  if (n % 3 === 0) return "fizz";
-  if (n % 5 === 0) return "buzz";
-  return "number";
-}
-
-function updateDisplay() {
-  numberEl.textContent = currentNumber;
-  scoreEl.textContent = score;
-  streakEl.textContent = streak;
-
-  // bounce animation
-  numberEl.classList.remove("bounce");
-  void numberEl.offsetWidth; // force reflow
-  numberEl.classList.add("bounce");
-}
-
-function showFeedback(message, color) {
-  feedbackEl.textContent = message;
-  feedbackEl.style.color = color;
-
-  feedbackEl.classList.remove("pop");
-  void feedbackEl.offsetWidth;
-  feedbackEl.classList.add("pop");
-}
-
-function nextNumber() {
-  currentNumber++;
-  updateDisplay();
-}
-
-// -----------------------------
-// GAME LOGIC
-// -----------------------------
-function handleChoice(choice) {
-  const correct = getFizzBuzzValue(currentNumber);
-
-  if (choice === correct) {
-    score++;
-    streak++;
-    showFeedback("Great job!", "#2e7d32"); // green
-    nextNumber();
-  } else {
-    streak = 0;
-    showFeedback("Try again!", "#c62828"); // red
-  }
-
-  updateDisplay();
-}
-
-// -----------------------------
-// BUTTON ANIMATION HELPERS
-// -----------------------------
-function squishButton(btn) {
-  btn.classList.add("squish");
-  setTimeout(() => btn.classList.remove("squish"), 150);
-}
-
-// -----------------------------
 // EVENT LISTENERS
-// -----------------------------
 startBtn.addEventListener("click", startGame);
 resetBtn.addEventListener("click", resetGame);
 
-btnFizz.addEventListener("click", () => {
-  squishButton(btnFizz);
-  handleChoice("fizz");
-});
-
-btnBuzz.addEventListener("click", () => {
-  squishButton(btnBuzz);
-  handleChoice("buzz");
-});
-
-btnFizzBuzz.addEventListener("click", () => {
-  squishButton(btnFizzBuzz);
-  handleChoice("fizzbuzz");
-});
-
-// -----------------------------
-// INITIALIZE GAME
-// -----------------------------
-updateDisplay();
+fizzBtn.addEventListener("click", () => checkAnswer("fizz"));
+buzzBtn.addEventListener("click", () => checkAnswer("buzz"));
+fizzbuzzBtn.addEventListener("click", () => checkAnswer("fizzbuzz"));

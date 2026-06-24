@@ -1,215 +1,107 @@
-/* Global reset-ish */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #e3f2fd;
   display: flex;
   justify-content: center;
-  align-items: center;
-  background: linear-gradient(180deg, #b3e5fc, #e1f5fe);
+  padding-top: 40px;
 }
 
-/* App container */
-.fbz-app {
+/* MAIN CONTAINER */
+.fbz-container {
+  background: white;
+  padding: 20px;
+  width: 360px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   position: relative;
-  width: min(900px, 95vw);
-  padding: 2rem 2.5rem 2.5rem;
-  border-radius: 32px;
-  background: #ffffffee;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
-  overflow: hidden;
 }
 
-/* Header */
+/* HEADER */
 .fbz-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 15px;
 }
 
-.fbz-header h1 {
-  font-size: 2rem;
-  color: #1976d2;
-  text-shadow: 0 2px 0 #ffffff;
-}
-
-/* Scoreboard */
-.fbz-scoreboard {
-  display: flex;
-  gap: 0.75rem;
-}
-
-.score-box {
-  background: #e3f2fd;
-  border-radius: 16px;
-  padding: 0.4rem 0.8rem;
-  box-shadow: 0 4px 0 #bbdefb;
-  text-align: center;
-}
-
-.score-label {
-  display: block;
-  font-size: 0.7rem;
-  color: #1565c0;
-}
-
-.score-value {
+.score-box, .streak-box {
   font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* RESET BUTTON */
+.reset-btn {
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  color: #0d47a1;
+  border: none;
+  border-radius: 12px;
+  background: #ef5350;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #c62828;
 }
 
-/* Main layout */
-.fbz-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
+.reset-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #c62828;
 }
 
-/* Number card */
-.fbz-number-card {
-  width: 260px;
-  height: 180px;
-  border-radius: 32px;
-  background: radial-gradient(circle at top, #fff9c4, #ffe082);
-  box-shadow: 0 14px 0 #ffca28;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* NUMBER DISPLAY */
+.fbz-number-box {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.fbz-number {
-  font-size: 5rem;
-  font-weight: 800;
-  color: #f57f17;
-  text-shadow: 0 4px 0 #fffde7;
+.number-display {
+  font-size: 4rem;
+  font-weight: bold;
+  background: #fff59d;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
 }
 
-/* Feedback text */
-.fbz-feedback {
-  min-height: 32px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #388e3c;
+.feedback {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
-/* Buttons row */
+/* BUTTONS */
 .fbz-buttons {
   display: flex;
-  gap: 1rem;
-  margin-top: 0.5rem;
+  justify-content: space-between;
 }
 
 .fbz-btn {
-  flex: 1;
-  padding: 0.9rem 0.5rem;
+  width: 30%;
+  padding: 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
   border: none;
-  border-radius: 999px;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #ffffff;
+  border-radius: 15px;
   cursor: pointer;
-  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.18);
-  transform: translateY(0);
-  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+  color: white;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.2);
+  transition: transform 0.1s;
 }
 
 .fbz-btn:active {
   transform: translateY(4px);
-  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.18);
-  filter: brightness(0.95);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.2);
 }
 
-/* Individual button colors */
-.fbz-btn.fizz {
-  background: linear-gradient(135deg, #42a5f5, #1e88e5);
-}
+.fizz { background: #42a5f5; }
+.buzz { background: #ffb74d; }
+.fizzbuzz { background: #66bb6a; }
 
-.fbz-btn.buzz {
-  background: linear-gradient(135deg, #ffb74d, #fb8c00);
-}
-
-.fbz-btn.fizzbuzz {
-  background: linear-gradient(135deg, #66bb6a, #43a047);
-}
-
-/* Floating shapes (purely decorative) */
-.fbz-floating-shapes {
-  pointer-events: none;
-}
-
-.shape {
-  position: absolute;
-  opacity: 0.25;
-  filter: blur(1px);
-  animation: float 12s linear infinite;
-}
-
-.shape-star {
-  width: 80px;
-  height: 80px;
-  background: radial-gradient(circle, #ffeb3b, #fbc02d);
-  border-radius: 24px;
-  top: 10%;
-  left: 5%;
-}
-
-.shape-cloud {
-  width: 140px;
-  height: 70px;
-  background: #ffffff;
-  border-radius: 50px;
-  top: 20%;
-  right: -30px;
-}
-
-.shape-circle {
-  width: 60px;
-  height: 60px;
-  background: #bbdefb;
-  border-radius: 50%;
-  bottom: 5%;
-  left: 15%;
-}
-
-@keyframes float {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-18px); }
-  100% { transform: translateY(0); }
-}
-
-/* Responsive tweaks */
-@media (max-width: 600px) {
-  .fbz-app {
-    padding: 1.5rem;
-  }
-
-  .fbz-number-card {
-    width: 220px;
-    height: 150px;
-  }
-
-  .fbz-number {
-    font-size: 4rem;
-  }
-
-  .fbz-buttons {
-    flex-direction: column;
-    width: 100%;
-  }
-}
 /* START SCREEN */
-.fbz-start-screen {
+.start-screen {
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255,255,255,0.95);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -238,22 +130,4 @@ body {
 .start-btn:active {
   transform: translateY(4px);
   box-shadow: 0 4px 0 #1565c0;
-}
-
-/* RESET BUTTON */
-.reset-btn {
-  padding: 0.4rem 1rem;
-  font-size: 0.9rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 12px;
-  background: #ef5350;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 4px 0 #c62828;
-}
-
-.reset-btn:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 #c62828;
 }
