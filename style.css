@@ -9,12 +9,8 @@ body {
 
 /* MAIN CONTAINER */
 .fbz-container {
-  width: 520px;        /* or 600px if you want a big arcade feel */
-  max-width: 90vw;     /* responsive */
-  padding: 30px;
-  border-radius: 25px;
+  width: 650px;
 }
-
 
 
 /* HEADER */
@@ -73,9 +69,7 @@ body {
 }
 
 .number-display {
-  font-size: 6rem;     /* was 4rem */
-  padding: 30px;
-  border-radius: 25px;
+  font-size: 7rem;
 }
 
 
@@ -87,15 +81,14 @@ body {
 
 /* BUTTONS */
 .fbz-buttons {
-  display: flex;
+  margin-top: 20px;
+  display flex;
   justify-content: space-between;
 }
 
 .fbz-btn {
-  width: 32%;
-  padding: 20px;       /* was 15px */
-  font-size: 1.5rem;   /* was 1.2rem */
-  border-radius: 20px;
+  font-size: 1.8rem;
+  padding: 25px;
 }
 
 
