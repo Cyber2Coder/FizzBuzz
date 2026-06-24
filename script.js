@@ -18,6 +18,9 @@ const sfxWrong = document.getElementById("sfx-wrong");
 const sfxClick = document.getElementById("sfx-click");
 
 // GAME STATE
+let timeLeft = 30;
+let timerInterval = null;
+
 let currentNumber = 1;
 let score = 0;
 let streak = 0;
@@ -46,6 +49,7 @@ function playClick() { sfxClick.currentTime = 0; sfxClick.play(); }
   if (isPaused) return;
 
 function checkAnswer(answer) {
+  if (isPaused) return;
   playClick();
 
   const isFizz = currentNumber % 3 === 0;
@@ -54,33 +58,77 @@ function checkAnswer(answer) {
     isFizz && isBuzz ? "fizzbuzz" :
     isFizz ? "fizz" :
     isBuzz ? "buzz" :
-    "none";
+    "number";
 
   if (answer === correctAnswer) {
     score++;
     streak++;
     playCorrect();
     showFeedback("Correct!", "green");
-    currentNumber++;
+
+    currentNumber++;      // <-- THIS is your number generator
+    updateDisplay();      // <-- triggers bounce animation
   } else {
     streak = 0;
     playWrong();
     showFeedback("Try again!", "red");
   }
+}
 
   updateDisplay();
-}
+
 
 // START GAME
   isPaused = false;
   pauseBtn.textContent = "Pause";
-
 function startGame() {
   currentNumber = 1;
   score = 0;
   streak = 0;
+  timeLeft = 30;
+  document.getElementById("timer").textContent = timeLeft;
+
+  fizzBtn.disabled = false;
+  buzzBtn.disabled = false;
+  fizzbuzzBtn.disabled = false;
+
   updateDisplay();
   startScreen.style.display = "none";
+
+  isPaused = false;
+  pauseBtn.textContent = "Pause";
+
+  startTimer();
+}
+
+// COUNTDOWN TIMER
+function startTimer() {
+  clearInterval(timerInterval);
+
+  timerInterval = setInterval(() => {
+    if (isPaused) return;
+
+    timeLeft--;
+    document.getElementById("timer").textContent = timeLeft;
+
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      endGame();
+    }
+  }, 1000);
+}
+// END GAME
+function endGame() {
+  showFeedback("Time's up!", "red");
+  isPaused = true;
+
+  // Optional: disable buttons visually
+  fizzBtn.disabled = true;
+  buzzBtn.disabled = true;
+  fizzbuzzBtn.disabled = true;
+
+  // Optional: show final score
+  alert(`Game Over!\nYour score: ${score}\nYour best streak: ${streak}`);
 }
 
 // RESET GAME
@@ -88,9 +136,20 @@ function resetGame() {
   currentNumber = 1;
   score = 0;
   streak = 0;
+  timeLeft = 30;
+  document.getElementById("timer").textContent = timeLeft;
+
+  fizzBtn.disabled = false;
+  buzzBtn.disabled = false;
+  fizzbuzzBtn.disabled = false;
+
   updateDisplay();
   showFeedback("Game reset!", "#1976d2");
+
+  clearInterval(timerInterval);
+  startTimer();
 }
+
 
 // PAUSE GAME
 function togglePause() {
