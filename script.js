@@ -3,6 +3,7 @@ const numberDisplay = document.getElementById("number-display");
 const feedback = document.getElementById("feedback");
 const scoreDisplay = document.getElementById("score");
 const streakDisplay = document.getElementById("streak");
+const timerDisplay = document.getElementById("timer");
 
 const fizzBtn = document.getElementById("fizz-btn");
 const buzzBtn = document.getElementById("buzz-btn");
@@ -11,6 +12,7 @@ const fizzbuzzBtn = document.getElementById("fizzbuzz-btn");
 const startScreen = document.getElementById("start-screen");
 const startBtn = document.getElementById("start-btn");
 const resetBtn = document.getElementById("reset-btn");
+const pauseBtn = document.getElementById("pause-btn");
 
 // AUDIO
 const sfxCorrect = document.getElementById("sfx-correct");
@@ -18,20 +20,23 @@ const sfxWrong = document.getElementById("sfx-wrong");
 const sfxClick = document.getElementById("sfx-click");
 
 // GAME STATE
-let timeLeft = 30;
-let timerInterval = null;
-
 let currentNumber = 1;
 let score = 0;
 let streak = 0;
 let isPaused = false;
+
+let timeLeft = 30;
+let timerInterval = null;
 
 // UPDATE UI
 function updateDisplay() {
   numberDisplay.textContent = currentNumber;
   scoreDisplay.textContent = score;
   streakDisplay.textContent = streak;
-  feedback.textContent = "";
+
+  numberDisplay.classList.remove("bounce");
+  void numberDisplay.offsetWidth;
+  numberDisplay.classList.add("bounce");
 }
 
 // FEEDBACK
@@ -45,9 +50,36 @@ function playCorrect() { sfxCorrect.currentTime = 0; sfxCorrect.play(); }
 function playWrong() { sfxWrong.currentTime = 0; sfxWrong.play(); }
 function playClick() { sfxClick.currentTime = 0; sfxClick.play(); }
 
-// GAME LOGIC
-  if (isPaused) return;
+// TIMER
+function startTimer() {
+  clearInterval(timerInterval);
 
+  timerInterval = setInterval(() => {
+    if (isPaused) return;
+
+    timeLeft--;
+    timerDisplay.textContent = timeLeft;
+
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      endGame();
+    }
+  }, 1000);
+}
+
+// END GAME
+function endGame() {
+  showFeedback("Time's up!", "red");
+  isPaused = true;
+
+  fizzBtn.disabled = true;
+  buzzBtn.disabled = true;
+  fizzbuzzBtn.disabled = true;
+
+  alert(`Game Over!\nScore: ${score}\nBest Streak: ${streak}`);
+}
+
+// CHECK ANSWER
 function checkAnswer(answer) {
   if (isPaused) return;
   playClick();
@@ -66,8 +98,8 @@ function checkAnswer(answer) {
     playCorrect();
     showFeedback("Correct!", "green");
 
-    currentNumber++;      // <-- THIS is your number generator
-    updateDisplay();      // <-- triggers bounce animation
+    currentNumber++;
+    updateDisplay();
   } else {
     streak = 0;
     playWrong();
@@ -75,24 +107,20 @@ function checkAnswer(answer) {
   }
 }
 
-  updateDisplay();
-
-
 // START GAME
-  isPaused = false;
-  pauseBtn.textContent = "Pause";
 function startGame() {
   currentNumber = 1;
   score = 0;
   streak = 0;
   timeLeft = 30;
-  document.getElementById("timer").textContent = timeLeft;
 
   fizzBtn.disabled = false;
   buzzBtn.disabled = false;
   fizzbuzzBtn.disabled = false;
 
+  timerDisplay.textContent = timeLeft;
   updateDisplay();
+
   startScreen.style.display = "none";
 
   isPaused = false;
@@ -101,48 +129,18 @@ function startGame() {
   startTimer();
 }
 
-// COUNTDOWN TIMER
-function startTimer() {
-  clearInterval(timerInterval);
-
-  timerInterval = setInterval(() => {
-    if (isPaused) return;
-
-    timeLeft--;
-    document.getElementById("timer").textContent = timeLeft;
-
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      endGame();
-    }
-  }, 1000);
-}
-// END GAME
-function endGame() {
-  showFeedback("Time's up!", "red");
-  isPaused = true;
-
-  // Optional: disable buttons visually
-  fizzBtn.disabled = true;
-  buzzBtn.disabled = true;
-  fizzbuzzBtn.disabled = true;
-
-  // Optional: show final score
-  alert(`Game Over!\nYour score: ${score}\nYour best streak: ${streak}`);
-}
-
 // RESET GAME
 function resetGame() {
   currentNumber = 1;
   score = 0;
   streak = 0;
   timeLeft = 30;
-  document.getElementById("timer").textContent = timeLeft;
 
   fizzBtn.disabled = false;
   buzzBtn.disabled = false;
   fizzbuzzBtn.disabled = false;
 
+  timerDisplay.textContent = timeLeft;
   updateDisplay();
   showFeedback("Game reset!", "#1976d2");
 
@@ -150,8 +148,7 @@ function resetGame() {
   startTimer();
 }
 
-
-// PAUSE GAME
+// PAUSE / RESUME
 function togglePause() {
   isPaused = !isPaused;
 

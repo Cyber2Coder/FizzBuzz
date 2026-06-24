@@ -9,33 +9,47 @@ body {
 
 /* MAIN CONTAINER */
 .fbz-container {
-  width: 650px;
+  background: white;
+  padding: 30px;
+  width: 520px;
+  max-width: 90vw;
+  border-radius: 25px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  position: relative;
 }
-
 
 /* HEADER */
 .fbz-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.score-box, .streak-box {
-  font-size: 1.1rem;
+.score-box, .streak-box, .timer-box {
+  font-size: 1.2rem;
   font-weight: bold;
 }
 
-/* RESET BUTTON */
-.reset-btn {
-  padding: 0.4rem 1rem;
-  font-size: 0.9rem;
+.timer-box {
+  color: #d32f2f;
+}
+
+/* BUTTONS: RESET + PAUSE */
+.reset-btn, .pause-btn {
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   border: none;
   border-radius: 12px;
-  background: #ef5350;
-  color: white;
   cursor: pointer;
+  color: white;
+}
+
+.reset-btn {
+  background: #ef5350;
   box-shadow: 0 4px 0 #c62828;
 }
 
@@ -44,16 +58,8 @@ body {
   box-shadow: 0 2px 0 #c62828;
 }
 
-/* PAUSE BUTTON */
 .pause-btn {
-  padding: 0.4rem 1rem;
-  font-size: 0.9rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 12px;
   background: #8e24aa;
-  color: white;
-  cursor: pointer;
   box-shadow: 0 4px 0 #6a1b9a;
 }
 
@@ -65,32 +71,43 @@ body {
 /* NUMBER DISPLAY */
 .fbz-number-box {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .number-display {
-  font-size: 7rem;
+  font-size: 6rem;
+  font-weight: bold;
+  background: #fff59d;
+  padding: 30px;
+  border-radius: 25px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
 }
-
 
 .feedback {
   margin-top: 10px;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: bold;
 }
 
-/* BUTTONS */
+/* GAME BUTTONS */
 .fbz-buttons {
-  margin-top: 20px;
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 }
 
 .fbz-btn {
-  font-size: 1.8rem;
-  padding: 25px;
+  width: 32%;
+  padding: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.2);
+  transition: transform 0.1s;
 }
-
 
 .fbz-btn:active {
   transform: translateY(4px);
@@ -135,6 +152,8 @@ body {
   transform: translateY(4px);
   box-shadow: 0 4px 0 #1565c0;
 }
+
+/* NUMBER BOUNCE ANIMATION */
 @keyframes bounce {
   0%   { transform: scale(1); }
   50%  { transform: scale(1.25); }
@@ -143,9 +162,4 @@ body {
 
 .bounce {
   animation: bounce 0.25s ease-out;
-}
-.timer-box {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #d32f2f;
 }
