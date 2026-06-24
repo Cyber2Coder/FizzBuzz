@@ -10,12 +10,13 @@ body {
 /* MAIN CONTAINER */
 .fbz-container {
   background: white;
-  padding: 20px;
-  width: 360px;
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  padding: 30px;
+  width: 520px;        /* was 360px */
+  border-radius: 25px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
   position: relative;
 }
+
 
 /* HEADER */
 .fbz-header {
@@ -48,6 +49,24 @@ body {
   box-shadow: 0 2px 0 #c62828;
 }
 
+/* PAUSE BUTTON */
+.pause-btn {
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  background: #8e24aa;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #6a1b9a;
+}
+
+.pause-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #6a1b9a;
+}
+
 /* NUMBER DISPLAY */
 .fbz-number-box {
   text-align: center;
@@ -55,13 +74,11 @@ body {
 }
 
 .number-display {
-  font-size: 4rem;
-  font-weight: bold;
-  background: #fff59d;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+  font-size: 6rem;     /* was 4rem */
+  padding: 30px;
+  border-radius: 25px;
 }
+
 
 .feedback {
   margin-top: 10px;
@@ -76,17 +93,12 @@ body {
 }
 
 .fbz-btn {
-  width: 30%;
-  padding: 15px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  color: white;
-  box-shadow: 0 6px 0 rgba(0,0,0,0.2);
-  transition: transform 0.1s;
+  width: 32%;
+  padding: 20px;       /* was 15px */
+  font-size: 1.5rem;   /* was 1.2rem */
+  border-radius: 20px;
 }
+
 
 .fbz-btn:active {
   transform: translateY(4px);

@@ -21,6 +21,7 @@ const sfxClick = document.getElementById("sfx-click");
 let currentNumber = 1;
 let score = 0;
 let streak = 0;
+let isPaused = false;
 
 // UPDATE UI
 function updateDisplay() {
@@ -42,6 +43,8 @@ function playWrong() { sfxWrong.currentTime = 0; sfxWrong.play(); }
 function playClick() { sfxClick.currentTime = 0; sfxClick.play(); }
 
 // GAME LOGIC
+  if (isPaused) return;
+
 function checkAnswer(answer) {
   playClick();
 
@@ -69,6 +72,9 @@ function checkAnswer(answer) {
 }
 
 // START GAME
+  isPaused = false;
+  pauseBtn.textContent = "Pause";
+
 function startGame() {
   currentNumber = 1;
   score = 0;
@@ -86,9 +92,23 @@ function resetGame() {
   showFeedback("Game reset!", "#1976d2");
 }
 
+// PAUSE GAME
+function togglePause() {
+  isPaused = !isPaused;
+
+  if (isPaused) {
+    showFeedback("Paused", "#6a1b9a");
+    pauseBtn.textContent = "Resume";
+  } else {
+    showFeedback("Game resumed!", "#1976d2");
+    pauseBtn.textContent = "Pause";
+  }
+}
+
 // EVENT LISTENERS
 startBtn.addEventListener("click", startGame);
 resetBtn.addEventListener("click", resetGame);
+pauseBtn.addEventListener("click", togglePause);
 
 fizzBtn.addEventListener("click", () => checkAnswer("fizz"));
 buzzBtn.addEventListener("click", () => checkAnswer("buzz"));
