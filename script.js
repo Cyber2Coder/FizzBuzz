@@ -27,13 +27,15 @@ let isPaused = false;
 
 let timeLeft = 30;
 let timerInterval = null;
+let roundInterval = null;
+let answeredThisRound = false;
 
 // ARCADE MODE: random number that is ALWAYS fizz, buzz, or fizzbuzz
 function getRandomNumber() {
   let n;
   do {
-    n = Math.floor(Math.random() * 100) + 1; // 1–100
-  } while (n % 3 !== 0 && n % 5 !== 0); // reject pure "number" cases
+    n = Math.floor(Math.random() * 100) + 1;
+  } while (n % 3 !== 0 && n % 5 !== 0);
   return n;
 }
 
@@ -55,9 +57,9 @@ function showFeedback(msg, color) {
 }
 
 // SOUND
-function playCorrect() { if (!sfxCorrect) return; sfxCorrect.currentTime = 0; sfxCorrect.play().catch(() => {}); }
-function playWrong() { if (!sfxWrong) return; sfxWrong.currentTime = 0; sfxWrong.play().catch(() => {}); }
-function playClick() { if (!sfxClick) return; sfxClick.currentTime = 0; sfxClick.play().catch(() => {}); }
+function playCorrect() { if (sfxCorrect) { sfxCorrect.currentTime = 0; sfxCorrect.play().catch(()=>{}); } }
+function playWrong() { if (sfxWrong) { sfxWrong.currentTime = 0; sfxWrong.play().catch(()=>{}); } }
+function playClick() { if (sfxClick) { sfxClick.currentTime = 0; sfxClick.play().catch(()=>{}); } }
 
 // TIMER
 function startTimer() {
@@ -71,9 +73,32 @@ function startTimer() {
 
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
+      clearInterval(roundInterval);
       endGame();
     }
   }, 1000);
+}
+
+// AUTO-ADVANCE ROUND ENGINE (3 seconds)
+function startRoundLoop() {
+  clearInterval(roundInterval);
+
+  roundInterval = setInterval(() => {
+    if (isPaused) return;
+
+    if (!answeredThisRound) {
+      // Player missed the question
+      streak = 0;
+      playWrong();
+      showFeedback("Missed!", "red");
+    }
+
+    // New round
+    answeredThisRound = false;
+    currentNumber = getRandomNumber();
+    updateDisplay();
+
+  }, 3000); // 3 seconds per round
 }
 
 // END GAME
@@ -88,30 +113,30 @@ function endGame() {
   alert(`Game Over!\nScore: ${score}\nBest Streak: ${streak}`);
 }
 
-// CHECK ANSWER (ARCADE MODE)
+// CHECK ANSWER
 function checkAnswer(answer) {
   if (isPaused) return;
+  if (answeredThisRound) return; // prevent double answers
+
   playClick();
+  answeredThisRound = true;
 
   const isFizz = currentNumber % 3 === 0;
   const isBuzz = currentNumber % 5 === 0;
   const correctAnswer =
     isFizz && isBuzz ? "fizzbuzz" :
     isFizz ? "fizz" :
-    "buzz"; // "number" never occurs in arcade mode
+    "buzz";
 
   if (answer === correctAnswer) {
     score++;
     streak++;
     playCorrect();
     showFeedback("Correct!", "green");
-
-    currentNumber = getRandomNumber();
-    updateDisplay();
   } else {
     streak = 0;
     playWrong();
-    showFeedback("Try again!", "red");
+    showFeedback("Wrong!", "red");
   }
 }
 
@@ -128,11 +153,15 @@ function startGame() {
   fizzbuzzBtn.disabled = false;
 
   currentNumber = getRandomNumber();
+  answeredThisRound = false;
+
   timerDisplay.textContent = timeLeft;
   updateDisplay();
 
   startScreen.style.display = "none";
+
   startTimer();
+  startRoundLoop();
 }
 
 // RESET GAME
@@ -148,12 +177,17 @@ function resetGame() {
   fizzbuzzBtn.disabled = false;
 
   currentNumber = getRandomNumber();
+  answeredThisRound = false;
+
   timerDisplay.textContent = timeLeft;
   updateDisplay();
   showFeedback("Game reset!", "#1976d2");
 
   clearInterval(timerInterval);
+  clearInterval(roundInterval);
+
   startTimer();
+  startRoundLoop();
 }
 
 // PAUSE / RESUME
