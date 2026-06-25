@@ -29,6 +29,10 @@ let timeLeft = 30;
 let timerInterval = null;
 
 // UPDATE UI
+function getRandomNumber() {
+  return Math.floor(Math.random() * 100) + 1; // 1–100
+}
+
 function updateDisplay() {
   numberDisplay.textContent = currentNumber;
   scoreDisplay.textContent = score;
@@ -109,7 +113,8 @@ function checkAnswer(answer) {
 
 // START GAME
 function startGame() {
-  currentNumber = 1;
+  currentNumber = getRandomNumber();
+  updateDisplay();
   score = 0;
   streak = 0;
   timeLeft = 30;
@@ -128,10 +133,13 @@ function startGame() {
 
   startTimer();
 }
+function getRandomNumber() {
+  return Math.floor(Math.random() * 100) + 1; // 1–100
+}
 
 // RESET GAME
 function resetGame() {
-  currentNumber = 1;
+  currentNumber = getRandomNumber();
   score = 0;
   streak = 0;
   timeLeft = 30;
