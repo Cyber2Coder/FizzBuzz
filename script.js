@@ -28,11 +28,16 @@ let isPaused = false;
 let timeLeft = 30;
 let timerInterval = null;
 
-// UPDATE UI
+// ARCADE MODE: random number that is ALWAYS fizz, buzz, or fizzbuzz
 function getRandomNumber() {
-  return Math.floor(Math.random() * 100) + 1; // 1–100
+  let n;
+  do {
+    n = Math.floor(Math.random() * 100) + 1; // 1–100
+  } while (n % 3 !== 0 && n % 5 !== 0); // reject pure "number" cases
+  return n;
 }
 
+// UPDATE UI
 function updateDisplay() {
   numberDisplay.textContent = currentNumber;
   scoreDisplay.textContent = score;
@@ -50,9 +55,9 @@ function showFeedback(msg, color) {
 }
 
 // SOUND
-function playCorrect() { sfxCorrect.currentTime = 0; sfxCorrect.play(); }
-function playWrong() { sfxWrong.currentTime = 0; sfxWrong.play(); }
-function playClick() { sfxClick.currentTime = 0; sfxClick.play(); }
+function playCorrect() { if (!sfxCorrect) return; sfxCorrect.currentTime = 0; sfxCorrect.play().catch(() => {}); }
+function playWrong() { if (!sfxWrong) return; sfxWrong.currentTime = 0; sfxWrong.play().catch(() => {}); }
+function playClick() { if (!sfxClick) return; sfxClick.currentTime = 0; sfxClick.play().catch(() => {}); }
 
 // TIMER
 function startTimer() {
@@ -83,7 +88,7 @@ function endGame() {
   alert(`Game Over!\nScore: ${score}\nBest Streak: ${streak}`);
 }
 
-// CHECK ANSWER
+// CHECK ANSWER (ARCADE MODE)
 function checkAnswer(answer) {
   if (isPaused) return;
   playClick();
@@ -93,8 +98,7 @@ function checkAnswer(answer) {
   const correctAnswer =
     isFizz && isBuzz ? "fizzbuzz" :
     isFizz ? "fizz" :
-    isBuzz ? "buzz" :
-    "number";
+    "buzz"; // "number" never occurs in arcade mode
 
   if (answer === correctAnswer) {
     score++;
@@ -102,7 +106,7 @@ function checkAnswer(answer) {
     playCorrect();
     showFeedback("Correct!", "green");
 
-    currentNumber++;
+    currentNumber = getRandomNumber();
     updateDisplay();
   } else {
     streak = 0;
@@ -113,41 +117,37 @@ function checkAnswer(answer) {
 
 // START GAME
 function startGame() {
-  currentNumber = getRandomNumber();
-  updateDisplay();
   score = 0;
   streak = 0;
   timeLeft = 30;
+  isPaused = false;
+  pauseBtn.textContent = "Pause";
 
   fizzBtn.disabled = false;
   buzzBtn.disabled = false;
   fizzbuzzBtn.disabled = false;
 
+  currentNumber = getRandomNumber();
   timerDisplay.textContent = timeLeft;
   updateDisplay();
 
   startScreen.style.display = "none";
-
-  isPaused = false;
-  pauseBtn.textContent = "Pause";
-
   startTimer();
-}
-function getRandomNumber() {
-  return Math.floor(Math.random() * 100) + 1; // 1–100
 }
 
 // RESET GAME
 function resetGame() {
-  currentNumber = getRandomNumber();
   score = 0;
   streak = 0;
   timeLeft = 30;
+  isPaused = false;
+  pauseBtn.textContent = "Pause";
 
   fizzBtn.disabled = false;
   buzzBtn.disabled = false;
   fizzbuzzBtn.disabled = false;
 
+  currentNumber = getRandomNumber();
   timerDisplay.textContent = timeLeft;
   updateDisplay();
   showFeedback("Game reset!", "#1976d2");
