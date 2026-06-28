@@ -7,89 +7,34 @@ body {
   padding-top: 40px;
 }
 
-/* MAIN CONTAINER */
 .fbz-container {
   background: white;
   padding: 30px;
-  width: 520px;
-  max-width: 90vw;
-  border-radius: 25px;
+  width: 360px;
+  border-radius: 20px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  position: relative;
 }
 
-/* HEADER */
 .fbz-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   margin-bottom: 20px;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.score-box, .streak-box, .timer-box {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.timer-box {
-  color: #d32f2f;
-}
-
-/* BUTTONS: RESET + PAUSE */
-.reset-btn, .pause-btn {
-  padding: 0.5rem 1.2rem;
-  font-size: 1rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  color: white;
-}
-
-.reset-btn {
-  background: #ef5350;
-  box-shadow: 0 4px 0 #c62828;
-}
-
-.reset-btn:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 #c62828;
-}
-
-.pause-btn {
-  background: #8e24aa;
-  box-shadow: 0 4px 0 #6a1b9a;
-}
-
-.pause-btn:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 #6a1b9a;
-}
-
-/* NUMBER DISPLAY */
-.fbz-number-box {
-  text-align: center;
-  margin-bottom: 25px;
 }
 
 .number-display {
-  font-size: 6rem;
-  font-weight: bold;
+  font-size: 4rem;
   background: #fff59d;
-  padding: 30px;
-  border-radius: 25px;
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
 }
 
 .feedback {
   margin-top: 10px;
-  font-size: 1.4rem;
-  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
 }
 
-/* GAME BUTTONS */
 .fbz-buttons {
   display: flex;
   justify-content: space-between;
@@ -98,68 +43,15 @@ body {
 
 .fbz-btn {
   width: 32%;
-  padding: 20px;
-  font-size: 1.5rem;
+  padding: 15px;
+  font-size: 1.2rem;
   font-weight: bold;
   border: none;
-  border-radius: 20px;
+  border-radius: 15px;
   cursor: pointer;
   color: white;
-  box-shadow: 0 6px 0 rgba(0,0,0,0.2);
-  transition: transform 0.1s;
-}
-
-.fbz-btn:active {
-  transform: translateY(4px);
-  box-shadow: 0 2px 0 rgba(0,0,0,0.2);
 }
 
 .fizz { background: #42a5f5; }
 .buzz { background: #ffb74d; }
 .fizzbuzz { background: #66bb6a; }
-
-/* START SCREEN */
-.start-screen {
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.95);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-}
-
-.start-title {
-  font-size: 3rem;
-  color: #1976d2;
-  margin-bottom: 1.5rem;
-}
-
-.start-btn {
-  padding: 1rem 2rem;
-  font-size: 1.4rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #42a5f5, #1e88e5);
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 10px 0 #1565c0;
-}
-
-.start-btn:active {
-  transform: translateY(4px);
-  box-shadow: 0 4px 0 #1565c0;
-}
-
-/* NUMBER BOUNCE ANIMATION */
-@keyframes bounce {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(1.25); }
-  100% { transform: scale(1); }
-}
-
-.bounce {
-  animation: bounce 0.25s ease-out;
-}

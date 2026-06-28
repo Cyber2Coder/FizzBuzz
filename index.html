@@ -3,39 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FizzBuzz 2.0</title>
-
-  <!-- CACHE‑BUSTER -->
-  <link rel="stylesheet" href="style.css?v=3">
+  <title>FizzBuzz 1.0</title>
+  <link rel="stylesheet" href="style.css?v=1">
 </head>
 
 <body>
 
-  <!-- START SCREEN -->
-  <div id="start-screen" class="start-screen">
-    <h1 class="start-title">FizzBuzz 2.0</h1>
-    <button id="start-btn" class="start-btn">Start Game</button>
-  </div>
-
-  <!-- MAIN GAME CONTAINER -->
   <div class="fbz-container">
 
-    <!-- HEADER -->
     <div class="fbz-header">
       <div class="score-box">Score: <span id="score">0</span></div>
       <div class="streak-box">Streak: <span id="streak">0</span></div>
-      <div class="timer-box">Time: <span id="timer">30</span>s</div>
-      <button id="pause-btn" class="pause-btn">Pause</button>
-      <button id="reset-btn" class="reset-btn">Reset</button>
     </div>
 
-    <!-- NUMBER DISPLAY -->
     <div class="fbz-number-box">
       <div id="number-display" class="number-display">1</div>
       <div id="feedback" class="feedback"></div>
     </div>
 
-    <!-- BUTTONS -->
     <div class="fbz-buttons">
       <button id="fizz-btn" class="fbz-btn fizz">Fizz</button>
       <button id="buzz-btn" class="fbz-btn buzz">Buzz</button>
@@ -44,12 +29,6 @@
 
   </div>
 
-  <!-- AUDIO -->
-  <audio id="sfx-correct" src="correct.wav" preload="auto"></audio>
-  <audio id="sfx-wrong" src="wrong.wav" preload="auto"></audio>
-  <audio id="sfx-click" src="click.wav" preload="auto"></audio>
-
-  <!-- CACHE‑BUSTER -->
-  <script src="script.js?v=3"></script>
+  <script src="script.js?v=1"></script>
 </body>
 </html>
